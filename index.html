@@ -27,6 +27,18 @@
     color: var(--ink);
     font-size: 16px;
     line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at top left, rgba(45,90,61,0.08), transparent 32%),
+      radial-gradient(circle at bottom right, rgba(26,26,24,0.05), transparent 28%);
+    pointer-events: none;
+    z-index: -1;
   }
 
   nav {
@@ -59,6 +71,14 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--ink); }
+
+  .nav-links a:focus-visible,
+  .project-link:focus-visible,
+  .btn:focus-visible,
+  .contact-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 
   section { padding: 5rem 2rem; max-width: 780px; margin: 0 auto; }
 
@@ -107,6 +127,26 @@
     max-width: 520px;
     line-height: 1.8;
     margin-bottom: 2.5rem;
+  }
+
+  .hero-focus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .focus-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+    backdrop-filter: blur(8px);
   }
 
   .hero-cta {
@@ -233,8 +273,13 @@
     border-radius: 8px;
     padding: 1.5rem;
     transition: border-color 0.2s;
+    overflow: hidden;
   }
   .project-card:hover { border-color: var(--ink); }
+
+  .project-card:hover .project-screenshot {
+    transform: scale(1.01);
+  }
 
   .project-top {
     display: flex; align-items: flex-start; justify-content: space-between;
@@ -269,6 +314,39 @@
     color: var(--muted);
     line-height: 1.7;
     margin-bottom: 1rem;
+  }
+
+  .project-screenshot {
+    min-height: 180px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(45,90,61,0.08), rgba(255,255,255,0.95));
+    display: block;
+    margin-bottom: 1rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .project-screenshot::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .project-screenshot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    object-fit: cover;
   }
 
   .project-stack {
@@ -353,11 +431,99 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
   .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .floaty { animation: floaty 5s ease-in-out infinite; }
   .delay-1 { animation-delay: 0.1s; opacity: 0; }
   .delay-2 { animation-delay: 0.25s; opacity: 0; }
   .delay-3 { animation-delay: 0.4s; opacity: 0; }
   .delay-4 { animation-delay: 0.55s; opacity: 0; }
+
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-card.reveal-on-scroll.is-visible {
+    box-shadow: 0 12px 30px rgba(26,26,24,0.04);
+  }
+
+  .section-fade {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .section-fade.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 720px) {
+    nav {
+      padding: 0 1rem;
+      height: auto;
+      min-height: 56px;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .nav-links {
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    #hero {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      min-height: auto;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+    }
+
+    .contact-section {
+      margin-left: 1rem;
+      margin-right: 1rem;
+      padding: 2rem 1.25rem;
+    }
+
+    .project-screenshot {
+      min-height: 150px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal-on-scroll,
+    .section-fade {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -375,8 +541,13 @@
 <section id="hero">
   <div class="hero-label fade-up delay-1">Available for opportunities</div>
   <h1 class="fade-up delay-2">Builder. Learner.<br><em>Problem solver.</em></h1>
+  <div class="hero-focus fade-up delay-3">
+    <span class="focus-pill">React-first UI</span>
+    <span class="focus-pill">Next.js + TypeScript</span>
+    <span class="focus-pill">Frontend systems</span>
+  </div>
   <p class="hero-sub fade-up delay-3">
-    I'm Larie — a Computer Science student, aspiring full stack developer, and maker of things that (sometimes) work. Based in Laguna, PH.
+    I'm Larie — a Computer Science student, React-focused frontend builder, and maker of things that (sometimes) work. Based in Laguna, PH.
   </p>
   <div class="hero-cta fade-up delay-4">
     <a href="#projects" class="btn btn-primary">View my work</a>
@@ -386,7 +557,7 @@
 
 <hr class="divider">
 
-<section id="about">
+<section id="about" class="section-fade" style="--reveal-delay: 0ms;">
   <div class="section-label">About</div>
   <h2>A winding road<br>to one clear passion.</h2>
   <div class="about-text">
@@ -398,7 +569,7 @@
 
 <hr class="divider">
 
-<section id="skills">
+<section id="skills" class="section-fade" style="--reveal-delay: 0ms;">
   <div class="section-label">Skills</div>
   <h2>What I work with.</h2>
   <div class="skills-grid">
@@ -445,19 +616,22 @@
 
 <hr class="divider">
 
-<section id="projects">
+<section id="projects" class="section-fade" style="--reveal-delay: 0ms;">
   <div class="section-label">Projects</div>
   <h2>Things I've built.</h2>
   <div class="projects-grid">
 
-    <div class="project-card">
+    <div class="project-card reveal-on-scroll" style="--reveal-delay: 0ms;">
       <div class="project-top">
         <div class="project-name">TechFocus PH</div>
         <span class="project-status status-live">In Progress</span>
       </div>
+          <div class="project-screenshot floaty" style="background-image: linear-gradient(135deg, rgba(45,90,61,0.08), rgba(255,255,255,0.95));">
+            <img src="assets/screenshots/techfocus-ph.png" alt="TechFocus PH screenshot" />
+      </div>
       <p class="project-desc">A transportation tech platform currently in MVP development. Handling frontend architecture and contributing to a full-stack system with a CMS-backed content pipeline and CI/CD deployment.</p>
       <div class="project-stack">
-        <span class="tag">Next.js 14</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Sanity</span><span class="tag">Vercel</span>
+        <span class="tag">React</span><span class="tag">Next.js 14</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Sanity</span><span class="tag">Vercel</span>
       </div>
       <div class="project-links">
         <a href="https://techfocus-ph.vercel.app/" class="project-link" target="_blank">Live preview ↗</a>
@@ -465,24 +639,30 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal-on-scroll" style="--reveal-delay: 90ms;">
       <div class="project-top">
-        <div class="project-name">AI Companion Hub</div>
+        <div class="project-name">AI Career Hub</div>
         <span class="project-status status-archived">Archived</span>
+      </div>
+      <div class="project-screenshot floaty" style="background-image: linear-gradient(135deg, rgba(45,90,61,0.08), rgba(255,255,255,0.95));">
+        <img src="assets/screenshots/ai-career-hub.png" alt="AI Career Hub screenshot" />
       </div>
       <p class="project-desc">A multi-tool career web app with an AI career mentor, salary negotiator, resume reviewer, side hustle generator, scholarship scraper, and a Dev.to API-powered blog. A real exercise in API integration and agentic AI workflows.</p>
       <div class="project-stack">
-        <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">Google AI Studio</span><span class="tag">React</span><span class="tag">Google Analytics</span>
+        <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">Google AI Studio</span><span class="tag">Google Analytics</span>
       </div>
       <div class="project-links">
         <a href="https://ai-companion-hub-self.vercel.app/" class="project-link" target="_blank">Live demo ↗</a>
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal-on-scroll" style="--reveal-delay: 180ms;">
       <div class="project-top">
         <div class="project-name">Barangay Profiling System</div>
         <span class="project-status status-live">Deployed</span>
+      </div>
+      <div class="project-screenshot floaty" style="background-image: linear-gradient(135deg, rgba(45,90,61,0.08), rgba(255,255,255,0.95));">
+        <img src="assets/screenshots/barangay-profiling-system.png" alt="Barangay Profiling System screenshot" />
       </div>
       <p class="project-desc">A data collection and profiling system built for real community use — deployed to actual barangay residents as part of a business intelligence initiative. Built with Flutter and Firebase, with Firestore as the backend database.</p>
       <div class="project-stack">
@@ -493,7 +673,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal-on-scroll" style="--reveal-delay: 270ms;">
       <div class="project-top">
         <div class="project-name">Crack Detection Model</div>
         <span class="project-status status-archived">Research</span>
@@ -504,10 +684,13 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal-on-scroll" style="--reveal-delay: 360ms;">
       <div class="project-top">
         <div class="project-name">Kwaygo</div>
         <span class="project-status status-archived">Discontinued</span>
+      </div>
+      <div class="project-screenshot floaty" style="background-image: linear-gradient(135deg, rgba(45,90,61,0.08), rgba(255,255,255,0.95));">
+        <img src="assets/screenshots/kwaygo.png" alt="Kwaygo screenshot" />
       </div>
       <p class="project-desc">A Flutter-based startup app that won a competition in Biñan, Laguna. Despite strong early momentum and months of marketing, the product was eventually sunsetted due to low user retention. A valuable lesson in product-market fit.</p>
       <div class="project-stack">
@@ -524,16 +707,39 @@
 <div class="contact-section" id="contact">
   <div class="section-label" style="justify-content:center; color:rgba(247,245,240,0.5);">Contact</div>
   <h2>Let's work together.</h2>
-  <p class="contact-sub">Open to junior dev roles, freelance projects, and interesting collaborations.</p>
+  <p class="contact-sub">Open to React-focused junior dev roles, freelance projects, and interesting collaborations.</p>
   <div class="contact-links">
     <a href="https://github.com/melee45" class="contact-btn contact-btn-light" target="_blank">GitHub ↗</a>
     <a href="mailto:amimirog@gmail.com" class="contact-btn contact-btn-outline">Send an email</a>
+    <span class="contact-btn contact-btn-outline" aria-label="Mobile available on request">Mobile on request</span>
   </div>
 </div>
 
 <footer>
   © 2025 Larie Amimirog · Built with HTML, CSS & a lot of learning.
 </footer>
+
+<script>
+  const revealElements = document.querySelectorAll('.reveal-on-scroll, .section-fade');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18,
+      rootMargin: '0px 0px -8% 0px'
+    });
+
+    revealElements.forEach((element) => observer.observe(element));
+  } else {
+    revealElements.forEach((element) => element.classList.add('is-visible'));
+  }
+</script>
 
 </body>
 </html>

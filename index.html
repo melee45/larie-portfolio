@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Larie Amimirog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F5F0;
+    --ink: #1A1A18;
+    --muted: #6B6B67;
+    --accent: #2D5A3D;
+    --accent-light: #E8F0EB;
+    --border: #E0DDD6;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  section { padding: 5rem 2rem; max-width: 780px; margin: 0 auto; }
+
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 5rem;
+    max-width: 780px;
+    margin: 0 auto;
+    padding-left: 2rem; padding-right: 2rem;
+  }
+
+  .hero-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.875rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .btn-primary:hover { background: #333330; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 2rem;
+    max-width: 780px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 1px;
+    background: var(--accent);
+  }
+
+  .about-text {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-top: 1.5rem;
+  }
+
+  .about-text p + p { margin-top: 1rem; }
+
+  .about-text strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .skill-group {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .skill-group-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+
+  .projects-grid {
+    display: flex; flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: var(--ink); }
+
+  .project-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .project-status {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-live { background: #E8F0EB; color: #2D5A3D; }
+  .status-private { background: #F0EDE8; color: #6B5A3D; }
+  .status-archived { background: #F0F0EE; color: #6B6B67; }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .project-stack {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  .project-link {
+    font-size: 0.82rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 0.3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--ink); }
+
+  .contact-section {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    margin: 0 2rem 5rem;
+    max-width: 780px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .contact-section h2 {
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-sub {
+    color: rgba(247,245,240,0.6);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .contact-btn-light {
+    background: var(--cream);
+    color: var(--ink);
+  }
+  .contact-btn-light:hover { background: #EAE8E2; }
+
+  .contact-btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(247,245,240,0.3);
+  }
+  .contact-btn-outline:hover { border-color: var(--cream); }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.25s; opacity: 0; }
+  .delay-3 { animation-delay: 0.4s; opacity: 0; }
+  .delay-4 { animation-delay: 0.55s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-name">Larie Amimirog</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-label fade-up delay-1">Available for opportunities</div>
+  <h1 class="fade-up delay-2">Builder. Learner.<br><em>Problem solver.</em></h1>
+  <p class="hero-sub fade-up delay-3">
+    I'm Larie — a Computer Science student, aspiring full stack developer, and maker of things that (sometimes) work. Based in Laguna, PH.
+  </p>
+  <div class="hero-cta fade-up delay-4">
+    <a href="#projects" class="btn btn-primary">View my work</a>
+    <a href="#contact" class="btn btn-secondary">Get in touch</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="about">
+  <div class="section-label">About</div>
+  <h2>A winding road<br>to one clear passion.</h2>
+  <div class="about-text">
+    <p>My path to software development wasn't straight. I started Computer Science in 2012, shifted to maritime studies, nearly completed a seafaring curriculum — then came back to CS because I knew <strong>I belonged in technology</strong>. That kind of conviction doesn't come from a straight line; it comes from lived experience.</p>
+    <p>Today I'm a <strong>consistent dean's lister at the University of Perpetual Help Biñan</strong>, finishing my CS degree (major in Data Science) this June 2025. Outside class I've been head of membership at an AWS Learning Club, volunteer staff at Generative AI events, and a regular at tech and startup events across the region.</p>
+    <p>I've built things that won competitions, things that failed, and things I'm still building. I love all of it — especially the parts where I had no idea what I was doing yet.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2>What I work with.</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend</div>
+      <div class="skill-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">React</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Flutter</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Backend & Data</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">Firestore</span>
+        <span class="tag">Next.js API Routes</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">ML & AI</div>
+      <div class="skill-tags">
+        <span class="tag">YOLOv8</span><span class="tag">Roboflow</span><span class="tag">Computer Vision</span><span class="tag">Google AI Studio</span><span class="tag">Agentic AI</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">Git & GitHub</span>
+        <span class="tag">Vercel</span>
+        <span class="tag">Sanity CMS</span><span class="tag">Blender</span><span class="tag">Google Analytics</span><span class="tag">AWS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2>Things I've built.</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">TechFocus PH</div>
+        <span class="project-status status-live">In Progress</span>
+      </div>
+      <p class="project-desc">A transportation tech platform currently in MVP development. Handling frontend architecture and contributing to a full-stack system with a CMS-backed content pipeline and CI/CD deployment.</p>
+      <div class="project-stack">
+        <span class="tag">Next.js 14</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Sanity</span><span class="tag">Vercel</span>
+      </div>
+      <div class="project-links">
+        <a href="https://techfocus-ph.vercel.app/" class="project-link" target="_blank">Live preview ↗</a>
+        <span style="font-size:0.82rem; color:var(--muted);">Private repo</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">AI Companion Hub</div>
+        <span class="project-status status-archived">Archived</span>
+      </div>
+      <p class="project-desc">A multi-tool career web app with an AI career mentor, salary negotiator, resume reviewer, side hustle generator, scholarship scraper, and a Dev.to API-powered blog. A real exercise in API integration and agentic AI workflows.</p>
+      <div class="project-stack">
+        <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">Google AI Studio</span><span class="tag">React</span><span class="tag">Google Analytics</span>
+      </div>
+      <div class="project-links">
+        <a href="https://ai-companion-hub-self.vercel.app/" class="project-link" target="_blank">Live demo ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Barangay Profiling System</div>
+        <span class="project-status status-live">Deployed</span>
+      </div>
+      <p class="project-desc">A data collection and profiling system built for real community use — deployed to actual barangay residents as part of a business intelligence initiative. Built with Flutter and Firebase, with Firestore as the backend database.</p>
+      <div class="project-stack">
+        <span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Firestore</span>
+      </div>
+      <div class="project-links">
+        <a href="https://barangay-profiling-system.web.app/" class="project-link" target="_blank">Live app ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Crack Detection Model</div>
+        <span class="project-status status-archived">Research</span>
+      </div>
+      <p class="project-desc">Trained a YOLOv8 object detection model for structural crack detection, achieving 91% accuracy. Used in a startup pitch that placed 3rd. Demonstrates applied computer vision on a real-world infrastructure problem.</p>
+      <div class="project-stack">
+        <span class="tag">YOLOv8</span><span class="tag">Roboflow</span><span class="tag">Python</span><span class="tag">Computer Vision</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Kwaygo</div>
+        <span class="project-status status-archived">Discontinued</span>
+      </div>
+      <p class="project-desc">A Flutter-based startup app that won a competition in Biñan, Laguna. Despite strong early momentum and months of marketing, the product was eventually sunsetted due to low user retention. A valuable lesson in product-market fit.</p>
+      <div class="project-stack">
+        <span class="tag">Flutter</span>
+      </div>
+      <div class="project-links">
+        <a href="https://kwaygo.com/" class="project-link" target="_blank">Visit site ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="contact-section" id="contact">
+  <div class="section-label" style="justify-content:center; color:rgba(247,245,240,0.5);">Contact</div>
+  <h2>Let's work together.</h2>
+  <p class="contact-sub">Open to junior dev roles, freelance projects, and interesting collaborations.</p>
+  <div class="contact-links">
+    <a href="https://github.com/melee45" class="contact-btn contact-btn-light" target="_blank">GitHub ↗</a>
+    <a href="mailto:amimirog@gmail.com" class="contact-btn contact-btn-outline">Send an email</a>
+  </div>
+</div>
+
+<footer>
+  © 2025 Larie Amimirog · Built with HTML, CSS & a lot of learning.
+</footer>
+
+</body>
+</html>
